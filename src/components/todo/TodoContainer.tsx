@@ -1,6 +1,5 @@
-import { TTodo } from "@/redux/features/todoSlice";
 import AddTodoModal from "./AddTodoModal";
-import TodoCard from "./TodoCard";
+import TodoCard, { TTodo } from "./TodoCard";
 import TodoFilter from "./TodoFilter";
 import { useGetTodosQuery } from "@/redux/api/api";
 import { useState } from "react";
