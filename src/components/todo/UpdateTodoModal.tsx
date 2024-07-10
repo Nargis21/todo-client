@@ -4,22 +4,30 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { useAppDispatch } from "@/redux/hook";
-import { TTodo, updateTodo } from "@/redux/features/todoSlice";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { useUpdateTodoMutation } from "@/redux/api/api";
+import { TTodo } from "./TodoCard";
 
 const UpdateTodoModal = ({ todo }: { todo: TTodo }) => {
 
-    const [task, setTask] = useState(todo.task)
+    const [task, setTask] = useState(todo.title)
     const [description, setDescription] = useState(todo.description)
     const [priority, setPriority] = useState(todo.priority)
-    const id = todo.id
 
-    const dispatch = useAppDispatch()
+    const [updateTodo] = useUpdateTodoMutation()
 
+    const options = {
+        id: todo._id,
+        data: {
+            title: task,
+            description,
+            priority,
+            isCompleted: todo.isCompleted
+        }
+    }
     const onSubmit = (e: FormEvent) => {
         e.preventDefault()
-        dispatch(updateTodo({ id, task, priority, description }))
+        updateTodo(options)
     }
     return (
 
@@ -45,7 +53,7 @@ const UpdateTodoModal = ({ todo }: { todo: TTodo }) => {
                                 Task
                             </Label>
                             <Input
-                                defaultValue={todo?.task}
+                                defaultValue={todo?.title}
                                 onBlur={(e) => setTask(e.target.value)}
                                 id="task"
                                 className="col-span-3"

@@ -15,7 +15,7 @@ const AddTodoModal = () => {
 
     const [addTodo] = useAddTodoMutation()
 
-    const onSubmit = async (e: FormEvent) => {
+    const onSubmit = (e: FormEvent) => {
         e.preventDefault()
         const taskDetails = {
             title: task,
@@ -23,7 +23,7 @@ const AddTodoModal = () => {
             priority,
             isCompleted: false
         }
-        await addTodo(taskDetails)
+        addTodo(taskDetails)
     }
     return (
 
