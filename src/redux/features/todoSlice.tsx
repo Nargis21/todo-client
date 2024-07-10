@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type TTodo = {
     id: string
-    task: string,
+    title: string,
     priority: string,
     description: string,
     isCompleted?: boolean
@@ -45,7 +45,7 @@ const todoSlice = createSlice({
         updateTodo: (state, action: PayloadAction<TTodo>) => {
             const todo = state.todos.find((todo) => todo.id === action.payload.id)
             todo!.description = action.payload.description
-            todo!.task = action.payload.task
+            todo!.title = action.payload.title
             todo!.priority = action.payload.priority
         },
         filterTodo: (state, action: PayloadAction<string>) => {

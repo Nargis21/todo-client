@@ -17,13 +17,23 @@ const TodoCard = ({ todo }: TTodoCardProps) => {
 
     return (
         <div className="flex justify-between items-center bg-white p-2 rounded-md border" >
-            <input onChange={handleToggle} checked={todo.isCompleted} type="checkbox" name="complete" id="complete" />
-            <h1 className="font-semibold">{todo.task}</h1>
-            {
-                todo.isCompleted ? <p className="text-green-500">Done</p> : <p className="text-red-500">Pending</p>
-            }
-            <h1 className="text-semibold text-yellow-500">{todo.priority}</h1>
-            <h1>{todo.description}</h1>
+            <input className="mr-3" onChange={handleToggle} checked={todo.isCompleted} type="checkbox" name="complete" id="complete" />
+            <p className="font-semibold flex-1">{todo.title}</p>
+            <div className="flex-1 flex items-center  gap-2">
+                <div className={`size-3 rounded-full 
+                    ${todo.priority === 'High' && 'bg-red-500'}
+                    ${todo.priority === 'Medium' && 'bg-yellow-500'}
+                    ${todo.priority === 'Low' && 'bg-green-500'}
+                    `}></div>
+                <p>{todo.priority}</p>
+            </div>
+            <div className="flex-1">
+                {
+                    todo.isCompleted ? <p className="text-green-500">Done</p> : <p className="text-red-500">Pending</p>
+                }
+            </div>
+
+            <p className="flex-[2]">{todo.description}</p>
             <div className="space-x-3">
                 <Button onClick={() => dispatch(removeTodo(todo.id))} className="bg-red-500">
                     <svg className="size-4" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
