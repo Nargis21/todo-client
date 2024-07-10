@@ -4,9 +4,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { useAppDispatch } from "@/redux/hook";
-import { addTodo } from "@/redux/features/todoSlice";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { useAddTodoMutation } from "@/redux/api/api";
 
 const AddTodoModal = () => {
 
@@ -14,13 +13,17 @@ const AddTodoModal = () => {
     const [description, setDescription] = useState('')
     const [priority, setPriority] = useState('')
 
-    const randomString = Math.random().toString(36).substring(2, 7)
+    const [addTodo] = useAddTodoMutation()
 
-    const dispatch = useAppDispatch()
-
-    const onSubmit = (e: FormEvent) => {
+    const onSubmit = async (e: FormEvent) => {
         e.preventDefault()
-        dispatch(addTodo({ id: randomString, task, priority, description }))
+        const taskDetails = {
+            title: task,
+            description,
+            priority,
+            isCompleted: false
+        }
+        await addTodo(taskDetails)
     }
     return (
 
@@ -58,10 +61,10 @@ const AddTodoModal = () => {
                             />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="description" className="text-right">
+                            <Label className="text-right">
                                 Priority
                             </Label>
-                            <Select onValueChange={(e) => setPriority(e)}>
+                            <Select onValueChange={(value) => setPriority(value)}>
                                 <SelectTrigger className="w-[275px]">
                                     <SelectValue placeholder="Select Priority" />
                                 </SelectTrigger>

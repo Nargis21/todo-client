@@ -19,7 +19,7 @@ const TodoCard = ({ todo }: TTodoCardProps) => {
         <div className="flex justify-between items-center bg-white p-2 rounded-md border" >
             <input className="mr-3" onChange={handleToggle} checked={todo.isCompleted} type="checkbox" name="complete" id="complete" />
             <p className="font-semibold flex-1">{todo.title}</p>
-            <div className="flex-1 flex items-center  gap-2">
+            <div className="flex-1 flex items-center gap-2">
                 <div className={`size-3 rounded-full 
                     ${todo.priority === 'High' && 'bg-red-500'}
                     ${todo.priority === 'Medium' && 'bg-yellow-500'}
